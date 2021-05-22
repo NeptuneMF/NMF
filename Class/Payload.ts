@@ -6,7 +6,16 @@ interface PayloadInterface {
   setBody: (body: object | object[], newFrom) => void;
 }
 
-export default class Payload implements PayloadInterface {
+interface PayloadManagerInterface {
+  name: string;
+  payload: Payload;
+  layerType: string
+  use: (payload: Payload) => Payload;
+  process: (payload: Payload) => Payload;
+}
+
+
+export class Payload implements PayloadInterface {
 
   trace: string[];
   from: string;
@@ -16,6 +25,27 @@ export default class Payload implements PayloadInterface {
     if (this.from) this.trace.push(this.from)
     this.from = newFrom
     this.body = body
+  }
+
+}
+
+
+export default class PayloadManager implements PayloadManagerInterface {
+  name: string = "manager";
+  payload: Payload;
+  layerType: string = "PayloadManager"
+
+  use(payload: Payload) {
+    const newPayload: Payload = new Payload()
+
+    newPayload.setBody(payload.body, this.name)
+    this.payload = newPayload
+
+    return this.process()
+  }
+
+  process() {
+    return this.payload
   }
 
 }
