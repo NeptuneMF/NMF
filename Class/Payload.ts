@@ -1,3 +1,5 @@
+import Entity from "./Entity";
+
 interface PayloadInterface {
   trace: string[];
   from: string;
@@ -34,6 +36,15 @@ export default class PayloadManager implements PayloadManagerInterface {
   name: string = "manager";
   payload: Payload;
   layerType: string = "PayloadManager"
+  entity: Entity;
+
+  setEntity(entity: Entity) {
+    this.entity = entity
+  }
+
+  getEntity() {
+    return this.entity
+  }
 
   use(payload: Payload) {
     const newPayload: Payload = new Payload()

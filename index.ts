@@ -10,8 +10,18 @@ const adapterExample: Adapter = new Adapter()
 const infrastructureExample: Infrastructure = new Infrastructure()
 const applicationExample: Application = new Application()
 
+class DomainTest extends Domain {
+  name: string = "domainTesttt";
+  adapterName: string = "Adapter";
+}
+
+const domainTest = new DomainTest()
+
 user.register(domainExample)
+user.register(domainTest)
 user.register(adapterExample)
 user.register(infrastructureExample)
 user.register(applicationExample)
-console.log(user.getLayers())
+
+console.log("domain copy", domainTest.entity.getLayers())
+//console.log("user entity", user.getLayers())

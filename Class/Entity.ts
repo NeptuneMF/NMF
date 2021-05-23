@@ -6,43 +6,51 @@ import PayloadManager from './Payload';
 
 interface EntityInterface {
   layerType: string;
-  infrastructures: Infrastructure[];
-  adapteres: Adapter[];
-  domains: Domain[];
-  applications: Application[];
+  Infrastructurs: { [key: string]: Infrastructure };
+  adapters: { [key: string]: Adapter };
+  domains: { [key: string]: Domain };
+  applications: { [key: string]: Application };
   getLayersOfOtherEntity: (entity: Entity) => void;
   register: (registable: PayloadManager) => void;
+  getAdapter: (string) => any;
+  getLayers: () => object;
 }
 
 export default class Entity implements EntityInterface {
   layerType: string = "Entity"
-  infrastructures: Infrastructure[] = [];
-  adapteres: Adapter[] = [];
-  domains: Domain[] = [];
-  applications: Application[] = [];
+  name: string = "Entity";
+  Infrastructurs: { [key: string]: Infrastructure } = {};
+  adapters: { [key: string]: Adapter } = {};
+  domains: { [key: string]: Domain } = {};
+  applications: { [key: string]: Application } = {};
 
   getLayersOfOtherEntity(entity: Entity) {
-    entity.infrastructures.forEach(layer => this.register(layer))
-    entity.adapteres.forEach(layer => this.register(layer))
-    entity.domains.forEach(layer => this.register(layer))
-    entity.applications.forEach(layer => this.register(layer))
+    Object.values(entity.Infrastructurs).forEach(layer => this.register(layer))
+    Object.values(entity.adapters).forEach(layer => this.register(layer))
+    Object.values(entity.domains).forEach(layer => this.register(layer))
+    Object.values(entity.applications).forEach(layer => this.register(layer))
   }
 
   register(registable: any): void {
     if ('layerType' in registable) {
-      if (registable.layerType == "Infrastructure") this.infrastructures.push(registable)
-      if (registable.layerType == "Adapter") this.adapteres.push(registable)
-      if (registable.layerType == "Domain") this.domains.push(registable)
-      if (registable.layerType == "Application") this.applications.push(registable)
+      if (registable.layerType == "Infrastructure") this.Infrastructurs[registable.name] = (registable); registable.setEntity(this);
+      if (registable.layerType == "Adapter") this.adapters[registable.name] = (registable)
+      if (registable.layerType == "Domain") this.domains[registable.name] = (registable)
+      if (registable.layerType == "Application") this.applications[registable.layerType] = (registable)
       if (registable.layerType == "Entity") this.getLayersOfOtherEntity(registable)
     }
     else throw new Error("This is no compatible obj")
   }
 
+  getAdapter(string) {
+    if (string in Object.keys(this.adapters)) return this.adapters[string]
+    else throw new Error("Not exist that adapter.")
+  }
+
   getLayers() {
     return {
-      infrastructures: this.infrastructures,
-      adapteres: this.adapteres,
+      Infrastructurs: this.Infrastructurs,
+      adapters: this.adapters,
       domains: this.domains,
       applications: this.applications
     }
