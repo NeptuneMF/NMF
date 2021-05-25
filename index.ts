@@ -12,16 +12,21 @@ const applicationExample: Application = new Application()
 
 class DomainTest extends Domain {
   name: string = "domainTesttt";
-  adapterName: string = "Adapter";
+  group: string = "test"
 }
 
 const domainTest = new DomainTest()
 
+user.register(adapterExample)
 user.register(domainExample)
 user.register(domainTest)
-user.register(adapterExample)
 user.register(infrastructureExample)
 user.register(applicationExample)
 
-console.log("domain copy", domainTest.entity.getLayers())
+
+async function test() {
+  console.log("user", await user.getAdapter("Adapter").use())
+}
+
+test()
 //console.log("user entity", user.getLayers())

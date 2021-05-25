@@ -7,12 +7,10 @@ export default class Adapter extends PayloadManager {
 
   //use in the childrens
   name: string = "Adapter";
-  adapterType: string = "Adapter";
-  toAdapterLayer: any;
-
-  //optional for reuse other adapter
-  adapterName: string;
-  adapter: any;
+  layer: string = "Infrastructure";
+  group: string = "DB";
+  handler: string = "Infrastructure";
+  layerToUse;
 
   /**
    * Uses adapter 
@@ -24,19 +22,15 @@ export default class Adapter extends PayloadManager {
    * @param [adapterName] 
    * @returns use 
    */
-  async use(payload: Payload, toAdapter: string, adapterName?: string): Promise<Payload> {
+  async use(payload: Payload): Promise<Payload> {
     const newPayload: Payload = new Payload()
-
-    if (adapterName || this.adapterName) {
-      this.adapter = this.entity.getAdapter(adapterName || this.adapterName)
-      newPayload.setBody(this.adapter.use(payload).body, this.name)
-    }
-    else {
-      newPayload.setBody(payload.body, this.name)
-    }
-    this.toAdapterLayer = this.entity.getLayer(toAdapter, this.adapterType)
     this.payload = newPayload
+    this.getLayer()
+    this.process()
+    return await this.layerToUse.use(this.payload)
+  }
 
-    return this.process()
+  async getLayer() {
+    if (this.layer == "Infrastructure") this.layerToUse = this.entity.getLayers()[this.layer]["mongo"][this.handler]
   }
 }

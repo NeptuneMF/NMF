@@ -6,6 +6,7 @@ export default class Infrastructure extends PayloadManager {
   name: string = "Infrastructure"
   adapterName: string = "Adapter";
   adapter: any;
+  group: string = "mongo"
 
   /**
    * Uses infrastructure
@@ -13,13 +14,16 @@ export default class Infrastructure extends PayloadManager {
    * @param [adapterName] 
    * @returns  
    */
-  async use(payload: Payload, adapterName?: string) {
-    const newPayload: Payload = new Payload()
-
-    this.adapter = this.entity.getAdapter(adapterName || this.adapterName)
-    newPayload.setBody(this.adapter.use(payload).body, this.name)
-    this.payload = newPayload
-
+  async use(payload: Payload) {
+    this.payload = payload
     return await this.process()
+  }
+
+  async process() {
+    this.payload.commitBody({
+      "msg": "found!"
+    })
+
+    return this.payload
   }
 }

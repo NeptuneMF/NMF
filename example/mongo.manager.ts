@@ -1,10 +1,10 @@
 import * as Mongoose from "mongoose";
-
+import { stage } from "./config"
 let database: Mongoose.Connection;
 
 export const connect = () => {
   // add your own uri below
-  const uri = "mongodb+srv://clean:NcRgOBvKwgh4076k@cluster0-v6q0g.mongodb.net/test?retryWrites=true&w=majority";
+  const uri = `mongodb+srv://${stage.DB.USER}:${stage.DB.PASS}@cluster0-v6q0g.mongodb.net/test?retryWrites=true&w=majority`;
   if (database) {
     return;
   }

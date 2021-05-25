@@ -12,13 +12,7 @@ export default class Domain extends PayloadManager {
    * @param [adapterName] 
    * @returns  
    */
-  use(payload: Payload, adapterName?: string) {
-    const newPayload: Payload = new Payload()
-
-    this.adapter = this.entity.getAdapter(adapterName || this.adapterName)
-    newPayload.setBody(this.adapter.use(payload).body, this.name)
-    this.payload = newPayload
-
+  async use(payload: Payload) {
     return this.process()
   }
 

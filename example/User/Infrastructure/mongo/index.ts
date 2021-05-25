@@ -1,9 +1,10 @@
 import Infrastructure from '../../../../Class/Infrastructure'
-import { UserMongo } from '../../Schemas/Schemas'
+import { UserMongo } from '../../Schemas'
 
 export default class create extends Infrastructure {
-  name: string = "mongoCreateUser";
+  name: string = "createUser";
   adapterName: string = "createUser";
+  group: string = "DB";
 
   async process() {
 

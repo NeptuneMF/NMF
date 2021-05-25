@@ -29,7 +29,7 @@ export class Payload implements IPayload {
 
   trace: string[];
   from: string;
-  body: object | object[];
+  body: any | any[];
 
   /**
    * Commits body
@@ -54,10 +54,13 @@ export class Payload implements IPayload {
 
 
 export default abstract class PayloadManager implements IPayloadManager {
-  name: string = "manager";
   payload: Payload;
-  layerType: string = "PayloadManager"
   entity: Entity;
+
+  //use in the childrens
+  layerType: string = "PayloadManager"
+  name: string = "manager";
+  group: string = "example"
 
   /**
    * Sets entity
@@ -82,7 +85,7 @@ export default abstract class PayloadManager implements IPayloadManager {
    * @param [adapterName] 
    * @returns  
    */
-  async use(payload: Payload, toAdapter?: string, adapterName?: string) {
+  async use(payload: Payload) {
     const newPayload: Payload = new Payload()
 
     newPayload.setBody(payload.body, this.name)
