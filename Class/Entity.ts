@@ -6,10 +6,7 @@ import PayloadManager from './Payload';
 
 interface EntityInterface {
   layerType: string;
-  Infrastructurs: { [key: string]: Infrastructure };
-  adapters: { [key: string]: Adapter };
-  domains: { [key: string]: Domain };
-  applications: { [key: string]: Application };
+  layers: { [key: string]: Infrastructure | Adapter | Domain | Application };
   getLayersOfOtherEntity: (entity: Entity) => void;
   register: (registable: PayloadManager) => void;
   getAdapter: (string) => any;
@@ -17,42 +14,56 @@ interface EntityInterface {
 }
 
 export default class Entity implements EntityInterface {
+
   layerType: string = "Entity"
   name: string = "Entity";
-  Infrastructurs: { [key: string]: Infrastructure } = {};
-  adapters: { [key: string]: Adapter } = {};
-  domains: { [key: string]: Domain } = {};
-  applications: { [key: string]: Application } = {};
+  layers: { [key: string]: Infrastructure | Adapter | Domain | Application } = {};
 
+  /**
+   * Gets layers of other entity
+   * @param entity 
+   */
   getLayersOfOtherEntity(entity: Entity) {
-    Object.values(entity.Infrastructurs).forEach(layer => this.register(layer))
-    Object.values(entity.adapters).forEach(layer => this.register(layer))
-    Object.values(entity.domains).forEach(layer => this.register(layer))
-    Object.values(entity.applications).forEach(layer => this.register(layer))
+    Object.values(entity.layers).forEach(layers => Object.values(layers).forEach(layer => this.register(layer)))
   }
 
+  /**
+   * Gets layer
+   * @param toAdapter 
+   * @param adapterType 
+   * @returns layer 
+   */
+  getLayer(toAdapter, adapterType): Infrastructure | Application | Adapter | Domain {
+    return this.layers[adapterType][toAdapter]
+  }
+
+  /**
+   * Registers entity
+   * @param registable 
+   */
   register(registable: any): void {
     if ('layerType' in registable) {
-      if (registable.layerType == "Infrastructure") this.Infrastructurs[registable.name] = (registable); registable.setEntity(this);
-      if (registable.layerType == "Adapter") this.adapters[registable.name] = (registable)
-      if (registable.layerType == "Domain") this.domains[registable.name] = (registable)
-      if (registable.layerType == "Application") this.applications[registable.layerType] = (registable)
       if (registable.layerType == "Entity") this.getLayersOfOtherEntity(registable)
+      else this.layers[registable.layerType][registable.name] = registable; registable.setEntity(this);
     }
     else throw new Error("This is no compatible obj")
   }
 
-  getAdapter(string) {
-    if (string in Object.keys(this.adapters)) return this.adapters[string]
+  /**
+   * Gets adapter
+   * @param adapterName 
+   * @returns  
+   */
+  getAdapter(adapterName: string) {
+    if (adapterName in Object.keys(this.layers["Adapter"])) return this.layers["Adapter"][adapterName]
     else throw new Error("Not exist that adapter.")
   }
 
+  /**
+   * Gets layers
+   * @returns  
+   */
   getLayers() {
-    return {
-      Infrastructurs: this.Infrastructurs,
-      adapters: this.adapters,
-      domains: this.domains,
-      applications: this.applications
-    }
+    return this.layers
   }
 }

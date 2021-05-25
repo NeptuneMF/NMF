@@ -1,6 +1,9 @@
 import Entity from "./Entity";
 
-interface PayloadInterface {
+/**
+ * Ipayload
+ */
+interface IPayload {
   trace: string[];
   from: string;
   body: object | object[];
@@ -8,21 +11,39 @@ interface PayloadInterface {
   setBody: (body: object | object[], newFrom) => void;
 }
 
-interface PayloadManagerInterface {
+/**
+ * Ipayload manager
+ */
+export interface IPayloadManager {
   name: string;
   payload: Payload;
   layerType: string
-  use: (payload: Payload) => Payload;
-  process: (payload: Payload) => Payload;
+  use: (payload: Payload | Promise<Payload>, toAdapter?: string, adapterName?: string) => Promise<Payload>;
+  process: (payload: Payload | Promise<Payload>) => Payload | Promise<Payload>;
 }
 
-
-export class Payload implements PayloadInterface {
+/**
+ * Payload
+ */
+export class Payload implements IPayload {
 
   trace: string[];
   from: string;
   body: object | object[];
 
+  /**
+   * Commits body
+   * @param body 
+   */
+  commitBody(body: object | object[]) {
+    this.body = body;
+  }
+
+  /**
+   * Sets body
+   * @param body 
+   * @param newFrom 
+   */
   setBody(body: object | object[], newFrom: string) {
     if (this.from) this.trace.push(this.from)
     this.from = newFrom
@@ -32,21 +53,36 @@ export class Payload implements PayloadInterface {
 }
 
 
-export default class PayloadManager implements PayloadManagerInterface {
+export default abstract class PayloadManager implements IPayloadManager {
   name: string = "manager";
   payload: Payload;
   layerType: string = "PayloadManager"
   entity: Entity;
 
+  /**
+   * Sets entity
+   * @param entity 
+   */
   setEntity(entity: Entity) {
     this.entity = entity
   }
 
+  /**
+   * Gets entity
+   * @returns  
+   */
   getEntity() {
     return this.entity
   }
 
-  use(payload: Payload) {
+  /**
+   * Uses payload manager
+   * @param payload 
+   * @param [toAdapter] 
+   * @param [adapterName] 
+   * @returns  
+   */
+  async use(payload: Payload, toAdapter?: string, adapterName?: string) {
     const newPayload: Payload = new Payload()
 
     newPayload.setBody(payload.body, this.name)
@@ -55,7 +91,11 @@ export default class PayloadManager implements PayloadManagerInterface {
     return this.process()
   }
 
-  process() {
+  /**
+   * Process payload manager
+   * @returns  
+   */
+  async process() {
     return this.payload
   }
 

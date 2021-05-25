@@ -18,5 +18,8 @@
   "homepage": "https://github.com/NeptuneMF/NMF#readme",
   "devDependencies": {
     "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "mongoose": "^5.12.11"
   }
 }

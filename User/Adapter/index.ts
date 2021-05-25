@@ -1,1 +1,0 @@
-import Adapter from '../../Class/Adapter'

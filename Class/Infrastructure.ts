@@ -7,13 +7,19 @@ export default class Infrastructure extends PayloadManager {
   adapterName: string = "Adapter";
   adapter: any;
 
-  use(payload: Payload, adapterName?: string) {
+  /**
+   * Uses infrastructure
+   * @param payload 
+   * @param [adapterName] 
+   * @returns  
+   */
+  async use(payload: Payload, adapterName?: string) {
     const newPayload: Payload = new Payload()
 
     this.adapter = this.entity.getAdapter(adapterName || this.adapterName)
     newPayload.setBody(this.adapter.use(payload).body, this.name)
     this.payload = newPayload
 
-    return this.process()
+    return await this.process()
   }
 }

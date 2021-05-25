@@ -6,7 +6,12 @@ export default class Domain extends PayloadManager {
   name: string = "Domain";
   adapterName: string = "Adapter";
   adapter: any;
-
+  /**
+   * Uses domain
+   * @param payload 
+   * @param [adapterName] 
+   * @returns  
+   */
   use(payload: Payload, adapterName?: string) {
     const newPayload: Payload = new Payload()
 
