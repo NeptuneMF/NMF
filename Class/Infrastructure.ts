@@ -5,7 +5,6 @@ export default class Infrastructure extends PayloadManager {
   layerType: string = "Infrastructure"
   name: string = "Infrastructure"
   adapterName: string = "Adapter";
-  adapter: any;
   group: string = "mongo"
 
   /**
@@ -19,9 +18,10 @@ export default class Infrastructure extends PayloadManager {
     return await this.process()
   }
 
+
   async process() {
     this.payload.commitBody({
-      "msg": "found!"
+      "msg": "infrstructure!"
     })
 
     return this.payload

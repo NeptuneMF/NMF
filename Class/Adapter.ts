@@ -7,9 +7,9 @@ export default class Adapter extends PayloadManager {
 
   //use in the childrens
   name: string = "Adapter";
-  layer: string = "Infrastructure";
-  group: string = "DB";
-  handler: string = "Infrastructure";
+  layer: string = "Domain";
+  group: string = "Creation";
+  handler: string = "Domain";
   layerToUse;
 
   /**
@@ -31,6 +31,6 @@ export default class Adapter extends PayloadManager {
   }
 
   async getLayer() {
-    if (this.layer == "Infrastructure") this.layerToUse = this.entity.getLayers()[this.layer]["mongo"][this.handler]
+    this.layerToUse = this.entity.getLayers()[this.layer][this.group][this.handler]
   }
 }

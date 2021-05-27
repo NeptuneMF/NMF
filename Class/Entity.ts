@@ -36,16 +36,12 @@ export default class Entity implements EntityInterface {
         case 'Entity':
           this.getLayersOfOtherEntity(registable)
           break
-        case 'Domain':
-          if (typeof this.layers[registable.layerType] != 'object') this.layers[registable.layerType] = {};
-          this.layers[registable.layerType][registable.name] = registable;
-          registable.setEntity(this);
-          break;
         case 'Adapter':
           if (typeof this.layers[registable.layerType] != 'object') this.layers[registable.layerType] = {};
           this.layers[registable.layerType][registable.name] = registable;
           registable.setEntity(this);
           break;
+        case 'Domain':
         case 'Infrastructure':
           if (typeof this.layers[registable.layerType] != 'object') this.layers[registable.layerType] = {};
           if (typeof this.layers[registable.layerType][registable.group] != 'object') this.layers[registable.layerType][registable.group] = {};

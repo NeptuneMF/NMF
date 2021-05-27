@@ -5,7 +5,8 @@ export default class Domain extends PayloadManager {
   layerType: string = "Domain";
   name: string = "Domain";
   adapterName: string = "Adapter";
-  adapter: any;
+  group: string = "Creation"
+
   /**
    * Uses domain
    * @param payload 
@@ -13,7 +14,17 @@ export default class Domain extends PayloadManager {
    * @returns  
    */
   async use(payload: Payload) {
-    return this.process()
+    this.payload = payload
+    return await this.process()
+  }
+
+
+  async process() {
+    this.payload.commitBody({
+      "msg": "body!"
+    })
+
+    return this.payload
   }
 
 }
