@@ -2,14 +2,13 @@ import Entity from './Class/Entity'
 import Domain from './Class/Domain'
 import Adapter from './Class/Adapter'
 import Infrastructure from './Class/Infrastructure'
-import Application from './Class/Application'
 import { Payload } from './Class/Payload'
-
+import PayloadManager from './Class/Payload'
+/*
 const user: Entity = new Entity()
 const domainExample: Domain = new Domain()
 const adapterExample: Adapter = new Adapter()
 const infrastructureExample: Infrastructure = new Infrastructure()
-const applicationExample: Application = new Application()
 
 class DomainTest extends Domain {
   name: string = "domainTesttt";
@@ -28,4 +27,14 @@ async function test() {
 }
 
 test()
+*/
 //console.log("user entity", user.getLayers())
+
+export const NMF = {
+  Entity,
+  Domain,
+  Adapter,
+  Infrastructure,
+  Payload,
+  PayloadManager
+}

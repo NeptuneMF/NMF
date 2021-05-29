@@ -2,9 +2,11 @@ import { Payload } from './Payload'
 import PayloadManager from './Payload'
 
 export default class Domain extends PayloadManager {
+  //internal
   layerType: string = "Domain";
+
+  //use in the childrens
   name: string = "Domain";
-  adapterName: string = "Adapter";
   group: string = "Creation"
 
   /**
@@ -18,7 +20,10 @@ export default class Domain extends PayloadManager {
     return await this.process()
   }
 
-
+  /**
+   * Process domain
+   * @returns  
+   */
   async process() {
     this.payload.commitBody({
       "msg": "body!"

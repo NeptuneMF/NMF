@@ -1,7 +1,6 @@
 import Adapter from './Adapter';
 import Infrastructure from './Infrastructure';
 import Domain from './Domain';
-import Application from './Application';
 import PayloadManager from './Payload';
 
 interface EntityInterface {
@@ -13,10 +12,12 @@ interface EntityInterface {
 }
 
 export default class Entity implements EntityInterface {
-
+  //internal
   layerType: string = "Entity"
-  name: string = "Entity";
   layers: object = {};
+
+  //use in the childrens
+  name: string = "Entity";
 
   /**
    * Gets layers of other entity
@@ -53,6 +54,11 @@ export default class Entity implements EntityInterface {
     else throw new Error("This is no compatible obj")
   }
 
+  /**
+   * Gets adapter
+   * @param adpterName 
+   * @returns  
+   */
   getAdapter(adpterName: string) {
     return this.layers["Adapter"][adpterName]
   }

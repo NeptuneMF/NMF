@@ -4,13 +4,13 @@ import { Payload } from './Payload'
 export default class Adapter extends PayloadManager {
   //internal
   layerType: string = "Adapter";
+  layerToUse;
 
   //use in the childrens
   name: string = "Adapter";
   layer: string = "Domain";
   group: string = "Creation";
   handler: string = "Domain";
-  layerToUse;
 
   /**
    * Uses adapter 

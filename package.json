@@ -1,5 +1,5 @@
 {
-  "name": "@nmf/nmf",
+  "name": "@neptuno/nmf",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -19,7 +19,5 @@
   "devDependencies": {
     "typescript": "^4.2.4"
   },
-  "dependencies": {
-    "mongoose": "^5.12.11"
-  }
+  "dependencies": {}
 }

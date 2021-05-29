@@ -2,9 +2,11 @@ import PayloadManager from './Payload'
 import { Payload } from './Payload'
 
 export default class Infrastructure extends PayloadManager {
+  //internal
   layerType: string = "Infrastructure"
+
+  //use in childrens
   name: string = "Infrastructure"
-  adapterName: string = "Adapter";
   group: string = "mongo"
 
   /**
@@ -18,7 +20,10 @@ export default class Infrastructure extends PayloadManager {
     return await this.process()
   }
 
-
+  /**
+   * Process infrastructure
+   * @returns  
+   */
   async process() {
     this.payload.commitBody({
       "msg": "infrstructure!"
