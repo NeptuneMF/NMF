@@ -30,7 +30,9 @@ test()
 */
 //console.log("user entity", user.getLayers())
 
-export const NMF = {
+//test
+
+export default {
   Entity,
   Domain,
   Adapter,

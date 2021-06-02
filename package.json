@@ -1,23 +1,26 @@
 {
-  "name": "@neptuno/nmf",
-  "version": "1.0.0",
+  "name": "nddd",
+  "version": "1.0.8",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "type": "commonjs",
+  "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NeptuneMF/NMF.git"
   },
-  "author": "",
+  "author": "nicolas-carlini",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/NeptuneMF/NMF/issues"
   },
   "homepage": "https://github.com/NeptuneMF/NMF#readme",
   "devDependencies": {
-    "typescript": "^4.2.4"
-  },
-  "dependencies": {}
+    "@types/node": "^15.6.1",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2"
+  }
 }
